@@ -3,4 +3,7 @@
     <color name="colorPrimary">#BCE55C</color>
     <color name="colorPrimaryDark">#CEF279</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorNaver">#00C43B</color>
+    <color name="colorDaum">#608FFB</color>
 </resources>

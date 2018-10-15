@@ -9,10 +9,13 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchWordAdapter extends ArrayAdapter {
+public class SearchWordAdapter extends ArrayAdapter{
 
-    public SearchWordAdapter(@NonNull Context context, int resource) {
+    String portal;
+
+    public SearchWordAdapter(@NonNull Context context, int resource, String portal) {
         super(context, resource);
+        this.portal = portal;
     }
 
     List<SearchWordItem> items = new ArrayList<>();
@@ -27,7 +30,7 @@ public class SearchWordAdapter extends ArrayAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public SearchWordItem getItem(int position) {
         return items.get(position);
     }
 
@@ -38,9 +41,10 @@ public class SearchWordAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SearchWordItemView view = new SearchWordItemView(getContext());
+        SearchWordItemView view = new SearchWordItemView(getContext(), portal);
         SearchWordItem item = items.get(position);
         view.setRankTextView(item.getRank());
+        view.setRankTextColor(item.getColorCode());
         view.setSearchWordTextView(item.getSearchWord());
 
         return view;

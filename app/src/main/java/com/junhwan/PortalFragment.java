@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -26,17 +27,17 @@ public class PortalFragment extends Fragment {
     static final String URL_NAVER = "https://www.naver.com/index.html";
     static final String URL_DAUM = "https://www.daum.net";
     ListView listView;
-
+    String portal;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.portal_fragment, container, false);
 
+        Toast.makeText(this.getContext(), R.string.first_toast, Toast.LENGTH_LONG).show();
+
         TextView portalTextView = rootView.findViewById(R.id.portalTextView);
         listView = rootView.findViewById(R.id.listView);
-
-        String portal;
 
         if(bundle != null){
             portal = bundle.getString(KEY);
@@ -45,7 +46,7 @@ public class PortalFragment extends Fragment {
             switch(portal){
                 case NAVER:
                     portalTextView.setText(R.string.naver);
-                    portalTextView.setBackgroundColor(Color.parseColor("#00C43B"));
+                    portalTextView.setBackgroundColor(getResources().getColor(R.color.colorNaver));
                     portalTextView.setTextColor(Color.WHITE);
                     targetUrl = URL_NAVER;
 
@@ -54,7 +55,7 @@ public class PortalFragment extends Fragment {
 
                 case DAUM:
                     portalTextView.setText(R.string.daum);
-                    portalTextView.setBackgroundColor(Color.parseColor("#608FFB"));
+                    portalTextView.setBackgroundColor(getResources().getColor(R.color.colorDaum));
                     portalTextView.setTextColor(Color.WHITE);
                     targetUrl = URL_DAUM;
 
@@ -92,23 +93,46 @@ public class PortalFragment extends Fragment {
 
         String searchWord;
         SearchWordItem item;
-        SearchWordAdapter adapter = new SearchWordAdapter(this.getContext(), R.id.listView);
+        SearchWordAdapter adapter = null;
 
-        int i = 0;
-        for(String s : splitResponse){
-            if(s.contains("span class=\"ah_k")){
-                searchWord = s.split("ah_k\">")[1].split("<")[0];
-                String rank = Integer.toString(i + 1);
-                item = new SearchWordItem(rank, searchWord);
+        int i;
+        switch(portal){
+            case NAVER:
+                adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);
+                i = 0;
+                for(String s : splitResponse){
+                    if(s.contains("span class=\"ah_k")){
+                        searchWord = s.split("ah_k\">")[1].split("<")[0];
+                        String rank = Integer.toString(i + 1);
+                        item = new SearchWordItem(rank, searchWord, R.color.colorNaver);
 
-                adapter.addItem(item);
+                        adapter.addItem(item);
 
-                i++;
-                if(i==20) break;
-            }
+                        i++;
+                        if(i==20) break;
+                    }
+                }
+                break;
+
+            case DAUM:
+                adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);
+                i = 0;
+                for (String s : splitResponse) {
+                    if (s.contains("tabindex=\"-1")) {
+                        searchWord = s.split("-1\">")[1].split("<")[0];
+                        String rank = Integer.toString(i + 1);
+                        item = new SearchWordItem(rank, searchWord, R.color.colorDaum);
+
+                        adapter.addItem(item);
+
+                        i++;
+                        if (i == 10) break;
+                    }
+                }
+                break;
         }
 
-        listView.setAdapter(adapter);
+        if(adapter != null) listView.setAdapter(adapter);
     }
 
     @Override

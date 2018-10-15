@@ -2,4 +2,5 @@
     <string name="app_name">실검봐</string>
     <string name="naver">NAVER</string>
     <string name="daum">DAUM</string>
+    <string name="first_toast">다른 사이트의 검색어를 보시려면 옆으로 미세요</string>
 </resources>
