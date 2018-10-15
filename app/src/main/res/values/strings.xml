@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">실검봐</string>
+    <string name="naver">NAVER</string>
+    <string name="daum">DAUM</string>
+</resources>
