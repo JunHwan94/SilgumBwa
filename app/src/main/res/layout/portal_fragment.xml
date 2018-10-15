@@ -5,27 +5,40 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/portalTextView"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:padding="10dp"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="사이트" />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/listView">
+        <TextView
+                android:id="@+id/portalTextView"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:padding="10dp"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/listView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="사이트" android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@android:drawable/stat_notify_sync"
+                android:id="@+id/refreshButton" android:background="?android:attr/panelBackground"
+                android:layout_marginEnd="10dp"/>
+    </LinearLayout>
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:divider="#00000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/portalTextView" />
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:divider="#00000000"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" android:layout_marginBottom="50dp"/>
 </android.support.constraint.ConstraintLayout>

@@ -7,12 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,15 +35,19 @@ public class PortalFragment extends Fragment {
         TextView portalTextView = rootView.findViewById(R.id.portalTextView);
         listView = rootView.findViewById(R.id.listView);
 
+        LinearLayout linearLayout = rootView.findViewById(R.id.linearLayout);
+        ImageButton refreshButton = rootView.findViewById(R.id.refreshButton);
+
         if(bundle != null){
             portal = bundle.getString(KEY);
 
-            String targetUrl;
+            String targetUrl = null;
             switch(portal){
                 case NAVER:
                     portalTextView.setText(R.string.naver);
                     portalTextView.setBackgroundColor(getResources().getColor(R.color.colorNaver));
                     portalTextView.setTextColor(Color.WHITE);
+                    linearLayout.setBackgroundColor(getResources().getColor(R.color.colorNaver));
                     targetUrl = URL_NAVER;
 
                     requestSearchWords(targetUrl);
@@ -57,11 +57,21 @@ public class PortalFragment extends Fragment {
                     portalTextView.setText(R.string.daum);
                     portalTextView.setBackgroundColor(getResources().getColor(R.color.colorDaum));
                     portalTextView.setTextColor(Color.WHITE);
+                    linearLayout.setBackgroundColor(getResources().getColor(R.color.colorDaum));
                     targetUrl = URL_DAUM;
 
                     requestSearchWords(targetUrl);
                     break;
             }
+
+            final String url = targetUrl;
+            refreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    requestSearchWords(url);
+                    Toast.makeText(getContext(), "새로고침 완료", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         return rootView;
     }
@@ -93,12 +103,11 @@ public class PortalFragment extends Fragment {
 
         String searchWord;
         SearchWordItem item;
-        SearchWordAdapter adapter = null;
+        SearchWordAdapter adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);;
 
         int i;
         switch(portal){
             case NAVER:
-                adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);
                 i = 0;
                 for(String s : splitResponse){
                     if(s.contains("span class=\"ah_k")){
@@ -115,7 +124,6 @@ public class PortalFragment extends Fragment {
                 break;
 
             case DAUM:
-                adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);
                 i = 0;
                 for (String s : splitResponse) {
                     if (s.contains("tabindex=\"-1")) {
