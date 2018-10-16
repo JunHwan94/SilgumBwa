@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import java.util.List;
 
 import static com.junhwan.NetworkStatus.TYPE_NOT_CONNECTED;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements FragmentCallBack{
     public static final String NAVER = "naver";
     public static final String DAUM = "daum";
     public static final String KEY = "key";
@@ -47,18 +48,6 @@ public class MainActivity extends AppCompatActivity{
             pager = findViewById(R.id.viewPager);
 
             setPortalFragment();
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            MobileAds.initialize(getBaseContext(), "ca-app-pub-4270520106393473~1961853823");
-                        }
-                    });
-                }
-            }).start();
 
             AdView adView = findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().build();
@@ -93,10 +82,15 @@ public class MainActivity extends AppCompatActivity{
         public void addItem(Fragment item){
             items.add(item);
         }
+
         @Nullable
         @Override
-        public CharSequence getPageTitle(int position) {
-            return super.getPageTitle(position);
+        public String getPageTitle(int position) {
+            if(position == 0){
+                return NAVER.toUpperCase();
+            }else if(position == 1){
+                return DAUM.toUpperCase();
+            }else return null;
         }
 
         @Override
@@ -107,6 +101,19 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public int getCount() {
             return items.size();
+        }
+    }
+
+    @Override
+    public void onFragmentSelected(String portal) {
+        PagerTabStrip pagerTabStrip = findViewById(R.id.pagerTabStrip);
+        switch(portal){
+            case NAVER:
+                pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.colorNaver));
+                break;
+            case DAUM:
+                pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.colorDaum));
+                break;
         }
     }
 }

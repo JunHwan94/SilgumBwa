@@ -14,16 +14,19 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.ads.MobileAds;
 
 import static com.junhwan.MainActivity.DAUM;
 import static com.junhwan.MainActivity.KEY;
 import static com.junhwan.MainActivity.NAVER;
+import static com.junhwan.NetworkStatus.TYPE_CONNECTED;
 
 public class PortalFragment extends Fragment {
     static final String URL_NAVER = "https://www.naver.com/index.html";
     static final String URL_DAUM = "https://www.daum.net";
     ListView listView;
     String portal;
+    FragmentCallBack callBack;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,11 +71,17 @@ public class PortalFragment extends Fragment {
             refreshButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    requestSearchWords(url);
-                    Toast.makeText(getContext(), "새로고침 완료", Toast.LENGTH_SHORT).show();
+                    int netStat = NetworkStatus.getConnectivityStatus(getContext().getApplicationContext());
+                    if(netStat == TYPE_CONNECTED) {
+                        requestSearchWords(url);
+                        Toast.makeText(getContext(), "새로고침 완료", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(), "새로고침 실패\n네트워크 연결 상태를 확인하세요", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
+
         return rootView;
     }
 
@@ -146,10 +155,18 @@ public class PortalFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        if(callBack == null){
+            callBack = (FragmentCallBack)context;
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+
+        if(callBack != null){
+            callBack = null;
+        }
     }
 }
