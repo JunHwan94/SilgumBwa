@@ -20,7 +20,7 @@ import java.util.List;
 
 import static com.junhwan.NetworkStatus.TYPE_NOT_CONNECTED;
 
-public class MainActivity extends AppCompatActivity implements FragmentCallBack{
+public class MainActivity extends AppCompatActivity{
     public static final String NAVER = "naver";
     public static final String DAUM = "daum";
     public static final String KEY = "key";
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCallBack{
 
         int netStat = NetworkStatus.getConnectivityStatus(getApplicationContext());
         if(netStat == TYPE_NOT_CONNECTED){
-            Toast.makeText(this, "인터넷에 연결되어있지 않습니다\n앱을 종료합니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
 
             handler.postDelayed(new Runnable() {
                 @Override
@@ -101,19 +101,6 @@ public class MainActivity extends AppCompatActivity implements FragmentCallBack{
         @Override
         public int getCount() {
             return items.size();
-        }
-    }
-
-    @Override
-    public void onFragmentSelected(String portal) {
-        PagerTabStrip pagerTabStrip = findViewById(R.id.pagerTabStrip);
-        switch(portal){
-            case NAVER:
-                pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.colorNaver));
-                break;
-            case DAUM:
-                pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.colorDaum));
-                break;
         }
     }
 }

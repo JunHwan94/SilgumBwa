@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">실검봐</string>
-    <string name="naver">NAVER</string>
-    <string name="daum">DAUM</string>
+
+    <string name="naver">N</string>
+    <string name="daum">D</string>
+
     <string name="first_toast">다른 사이트의 검색어를 보시려면 옆으로 미세요</string>
+    <string name="not_connected">인터넷에 연결되어있지 않습니다\n앱을 종료합니다</string>
+
+    <string name="refresh_done">새로고침 완료</string>
+    <string name="refresh_fail">새로고침 실패\n네트워크 연결 상태를 확인하세요</string>
 </resources>

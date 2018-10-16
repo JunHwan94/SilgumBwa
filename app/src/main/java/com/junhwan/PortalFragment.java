@@ -74,9 +74,9 @@ public class PortalFragment extends Fragment {
                     int netStat = NetworkStatus.getConnectivityStatus(getContext().getApplicationContext());
                     if(netStat == TYPE_CONNECTED) {
                         requestSearchWords(url);
-                        Toast.makeText(getContext(), "새로고침 완료", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.refresh_done, Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getContext(), "새로고침 실패\n네트워크 연결 상태를 확인하세요", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.refresh_fail, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -155,18 +155,10 @@ public class PortalFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        if(callBack == null){
-            callBack = (FragmentCallBack)context;
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
-        if(callBack != null){
-            callBack = null;
-        }
     }
 }
