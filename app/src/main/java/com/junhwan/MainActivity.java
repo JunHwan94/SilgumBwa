@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity{
     public static final String DAUM = "daum";
     public static final String KEY = "key";
     private ViewPager pager;
+    private static long backPressedTime = 0;
 
     Handler handler = new Handler();
 
@@ -102,5 +103,22 @@ public class MainActivity extends AppCompatActivity{
         public int getCount() {
             return items.size();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast toast = Toast.makeText(this, R.string.finish_toast, Toast.LENGTH_SHORT);
+
+        if(System.currentTimeMillis() > backPressedTime + 2000){
+            backPressedTime = System.currentTimeMillis();
+            toast.show();
+            return;
+        }
+
+        if(System.currentTimeMillis() <= backPressedTime + 2000){
+            super.onBackPressed();
+            toast.cancel();
+        }
+
     }
 }
