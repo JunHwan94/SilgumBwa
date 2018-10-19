@@ -5,8 +5,8 @@
     android:layout_height="50dp"
     android:layout_margin="15dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
-
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/rankTextView"
@@ -16,15 +16,15 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
-        tools:text="rank" />
+        tools:text="rank"/>
 
     <TextView
-            android:id="@+id/wordTextView"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center_vertical"
-            tools:text="searchword"/>
+        android:id="@+id/wordTextView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        tools:text="searchword"/>
 </LinearLayout>

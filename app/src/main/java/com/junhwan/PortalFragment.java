@@ -1,6 +1,7 @@
 package com.junhwan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.ads.MobileAds;
 
 import static com.junhwan.MainActivity.DAUM;
 import static com.junhwan.MainActivity.KEY;
@@ -27,6 +27,7 @@ public class PortalFragment extends Fragment {
     ListView listView;
     String portal;
     FragmentCallBack callBack;
+    SearchWordAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class PortalFragment extends Fragment {
 
         String searchWord;
         SearchWordItem item;
-        SearchWordAdapter adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);;
+        adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);;
 
         int i;
         switch(portal){
@@ -150,6 +151,30 @@ public class PortalFragment extends Fragment {
         }
 
         if(adapter != null) listView.setAdapter(adapter);
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String url = null;
+                String searchWord = adapter.getItem(position).getSearchWord();
+                switch(portal){
+                    case NAVER:
+                        url = "https://search.naver.com/search.naver?where=nexearch&sm=top_sly.hst&fbm=1&acr=2&ie=utf8&query="
+                                + searchWord;
+                        break;
+                    case DAUM:
+                        url = "https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&q="
+                                + searchWord;
+                        break;
+                }
+
+                if(url != null) {
+                    Intent intent = new Intent(getContext().getApplicationContext(), WebViewActivity.class);
+                    intent.putExtra(KEY, url);
+                    getContext().getApplicationContext().startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
