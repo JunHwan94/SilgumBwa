@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import static com.junhwan.MainActivity.DAUM;
 import static com.junhwan.MainActivity.KEY;
 import static com.junhwan.MainActivity.NAVER;
 import static com.junhwan.NetworkStatus.TYPE_CONNECTED;
+import static com.junhwan.NetworkStatus.getConnectivityStatus;
 
 public class PortalFragment extends Fragment {
     static final String URL_NAVER = "https://www.naver.com/index.html";
@@ -34,7 +36,7 @@ public class PortalFragment extends Fragment {
         Bundle bundle = getArguments();
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.portal_fragment, container, false);
 
-        Toast.makeText(this.getContext(), R.string.first_toast, Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getContext(), R.string.first_toast, Toast.LENGTH_SHORT).show();
 
         TextView portalTextView = rootView.findViewById(R.id.portalTextView);
         listView = rootView.findViewById(R.id.listView);
@@ -75,8 +77,7 @@ public class PortalFragment extends Fragment {
                     int netStat = NetworkStatus.getConnectivityStatus(getContext().getApplicationContext());
                     if(netStat == TYPE_CONNECTED) {
                         requestSearchWords(url);
-                        Toast.makeText(getContext(), R.string.refresh_done, Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else{
                         Toast.makeText(getContext(), R.string.refresh_fail, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -148,6 +149,16 @@ public class PortalFragment extends Fragment {
                     }
                 }
                 break;
+        }
+
+        if(listView.getAdapter() != null){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), R.string.refresh_done, Toast.LENGTH_SHORT).show();
+                }
+            }, 300);
         }
 
         if(adapter != null) listView.setAdapter(adapter);
