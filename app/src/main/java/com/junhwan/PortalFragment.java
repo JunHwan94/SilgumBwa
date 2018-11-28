@@ -21,14 +21,13 @@ import static com.junhwan.MainActivity.DAUM;
 import static com.junhwan.MainActivity.KEY;
 import static com.junhwan.MainActivity.NAVER;
 import static com.junhwan.NetworkStatus.TYPE_CONNECTED;
-import static com.junhwan.NetworkStatus.getConnectivityStatus;
 
 public class PortalFragment extends Fragment {
     static final String URL_NAVER = "https://www.naver.com/index.html";
     static final String URL_DAUM = "https://www.daum.net";
     ListView listView;
     String portal;
-    FragmentCallBack callBack;
+    FragmentCallBack callback;
     SearchWordAdapter adapter;
     @Nullable
     @Override
@@ -114,7 +113,7 @@ public class PortalFragment extends Fragment {
 
         String searchWord;
         SearchWordItem item;
-        adapter = new SearchWordAdapter(this.getContext(), R.id.listView, portal);;
+        adapter = new SearchWordAdapter(this.getContext(), R.id.listView);
 
         int i;
         switch(portal){

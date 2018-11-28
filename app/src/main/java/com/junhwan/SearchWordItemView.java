@@ -1,29 +1,19 @@
 package com.junhwan;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import static com.junhwan.MainActivity.DAUM;
-import static com.junhwan.MainActivity.NAVER;
 
 public class SearchWordItemView extends LinearLayout {
     private TextView rankTextView;
     private TextView searchWordTextView;
-    private String portal;
-    public static final String KEY = "1";
 
-    public SearchWordItemView(Context context, String portal) {
+    public SearchWordItemView(Context context) {
         super(context);
         init(context);
-        this.portal = portal;
     }
 
     public SearchWordItemView(Context context, @Nullable AttributeSet attrs) {
