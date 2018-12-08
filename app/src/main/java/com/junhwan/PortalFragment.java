@@ -184,7 +184,7 @@ public class PortalFragment extends Fragment {
                     builder.setToolbarColor(getContext().getColor(R.color.colorPrimary));
 
                     CustomTabsIntent intent = builder.build();
-                    intent.launchUrl(getContext().getApplicationContext(), Uri.parse(url));
+                    intent.launchUrl(getContext(), Uri.parse(url));
                 }
             }
         });

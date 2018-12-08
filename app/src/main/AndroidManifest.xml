@@ -28,9 +28,6 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|keyboardHidden|screenSize"></activity>
-        <activity android:name=".WebViewActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
     </application>
 
 </manifest>
