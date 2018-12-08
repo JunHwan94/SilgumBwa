@@ -1,12 +1,13 @@
 package com.junhwan;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.*;
@@ -27,8 +28,8 @@ public class PortalFragment extends Fragment {
     static final String URL_DAUM = "https://www.daum.net";
     ListView listView;
     String portal;
-    FragmentCallBack callback;
     SearchWordAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -179,9 +180,11 @@ public class PortalFragment extends Fragment {
                 }
 
                 if(url != null) {
-                    Intent intent = new Intent(getContext().getApplicationContext(), WebViewActivity.class);
-                    intent.putExtra(KEY, url);
-                    getContext().getApplicationContext().startActivity(intent);
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(getContext().getColor(R.color.colorPrimary));
+
+                    CustomTabsIntent intent = builder.build();
+                    intent.launchUrl(getContext().getApplicationContext(), Uri.parse(url));
                 }
             }
         });
